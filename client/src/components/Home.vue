@@ -12,7 +12,7 @@
         start-angle="315"
         end-angle="+270"
         line-cap="round"
-        step="8"
+        step="2"
         min="6"
         max=128
         radius="120"

@@ -1,36 +1,27 @@
-import random
+from flask import Flask, jsonify
+from flask_cors import CORS
+import genPass
+
+# configuration
+DEBUG = True
+
+# instantiate the app
+app = Flask(__name__)
+app.config.from_object(__name__)
+
+# enable CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-def genPass(c):
+# sanity check route
+@app.route('/api/gen/<int:c>', methods=['GET'])
+def ping_pong(c):
+    passgen = {
+        "data": genPass.genPass(c)
+    }
 
-    chars = [
-        ['@', '#', '$', '%'],
-
-        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-
-        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-         'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-
-        ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-         'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-
-        ['{', '}', '[', ']',
-         '(', ')', '/', '\', ''', '"', '`', '~', ',', ':', '.', '<', '>']
-    ]
-
-    i = 0
-    passgen = ''
-    while i < c:
-        passgen += charandom(chars)
-        i += 1
-
-    return passgen
+    return jsonify(passgen)
 
 
-def charandom(a):
-    ranchar = random.randint(0, 4)
-    ranum = random.randrange(0, len(a[ranchar]))
-    return a[ranchar][ranum]
-
-
-print(genPass(32))
+if __name__ == '__main__':
+    app.run()

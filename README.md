@@ -1,3 +1,3 @@
 # passgenapp
 
-Simple Password Generator using Python
+Simple Password Generator using Python, Flask Api annd VueJs
